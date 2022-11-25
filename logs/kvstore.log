@@ -1,0 +1,131 @@
+12-Oct-22 19:43:39 - INFO - [KV] KV Store Server started...
+12-Oct-22 19:43:39 - INFO - Server listening for connections at address 127.0.0.1:7001
+12-Oct-22 19:43:42 - INFO - Connected to client ('127.0.0.1', 52005)
+12-Oct-22 19:43:42 - INFO - Client ('127.0.0.1', 52005) has connected.
+12-Oct-22 19:43:42 - INFO - KV Number of clients connected: 1
+12-Oct-22 19:43:42 - INFO - Packet length 30 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:42 - INFO - Command & category received from client ('127.0.0.1', 52005): ('cleanup', 'all')
+12-Oct-22 19:43:42 - INFO - Cleaning up KV Store's data from previous runs
+
+12-Oct-22 19:43:42 - INFO - All intermediate files from previous sessions cleaned
+
+12-Oct-22 19:43:44 - INFO - Connected to client ('127.0.0.1', 52006)
+12-Oct-22 19:43:44 - INFO - Client ('127.0.0.1', 52006) has connected.
+12-Oct-22 19:43:44 - INFO - KV Number of clients connected: 1
+12-Oct-22 19:43:44 - INFO - Packet length 2918 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:44 - INFO - Command & category received from client ('127.0.0.1', 52006): ('set', 'input')
+12-Oct-22 19:43:44 - INFO - Generating mapper1 input & writing to ./kv-data-store/input-docs/input-mapper1.json
+12-Oct-22 19:43:44 - INFO - Generating mapper2 input & writing to ./kv-data-store/input-docs/input-mapper2.json
+12-Oct-22 19:43:44 - INFO - Generating mapper3 input & writing to ./kv-data-store/input-docs/input-mapper3.json
+12-Oct-22 19:43:44 - INFO - Generating mapper4 input & writing to ./kv-data-store/input-docs/input-mapper4.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52008)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52008) has connected.
+12-Oct-22 19:43:45 - INFO - Packet length 38 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52008): ('get', 'input')
+12-Oct-22 19:43:45 - INFO - Mapper ID received: mapper1
+12-Oct-22 19:43:45 - INFO - Retrieving mapper1 input from ./kv-data-store/input-docs/input-mapper1.json
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 1
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52007)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52007) has connected.
+12-Oct-22 19:43:45 - INFO - Packet length 38 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52007): ('get', 'input')
+12-Oct-22 19:43:45 - INFO - Mapper ID received: mapper4
+12-Oct-22 19:43:45 - INFO - Retrieving mapper4 input from ./kv-data-store/input-docs/input-mapper4.json
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 2
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52009)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52009) has connected.
+12-Oct-22 19:43:45 - INFO - Packet length 38 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 1
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52009): ('get', 'input')
+12-Oct-22 19:43:45 - INFO - Mapper ID received: mapper3
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52010)
+12-Oct-22 19:43:45 - INFO - Retrieving mapper3 input from ./kv-data-store/input-docs/input-mapper3.json
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52010) has connected.
+12-Oct-22 19:43:45 - INFO - Packet length 38 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52010): ('get', 'input')
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 2
+12-Oct-22 19:43:45 - INFO - Mapper ID received: mapper2
+12-Oct-22 19:43:45 - INFO - Retrieving mapper2 input from ./kv-data-store/input-docs/input-mapper2.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52011)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52011) has connected.
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 1
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52012)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52012) has connected.
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 2
+12-Oct-22 19:43:45 - INFO - Packet length 186 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52012): ('set', 'mapper-output')
+12-Oct-22 19:43:45 - INFO - Generating mapper1 output & writing to ./kv-data-store/mapper-output/mapper1.json
+12-Oct-22 19:43:45 - INFO - Packet length 932 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52014)
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52011): ('set', 'mapper-output')
+12-Oct-22 19:43:45 - INFO - Generating mapper4 output & writing to ./kv-data-store/mapper-output/mapper4.json
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52014) has connected.
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 3
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52013)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52013) has connected.
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 4
+12-Oct-22 19:43:45 - INFO - Packet length 3853 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52014): ('set', 'mapper-output')
+12-Oct-22 19:43:45 - INFO - Generating mapper3 output & writing to ./kv-data-store/mapper-output/mapper3.json
+12-Oct-22 19:43:45 - INFO - Packet length 89 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52013): ('set', 'mapper-output')
+12-Oct-22 19:43:45 - INFO - Generating mapper2 output & writing to ./kv-data-store/mapper-output/mapper2.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52019)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52019) has connected.
+12-Oct-22 19:43:45 - INFO - Packet length 60 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52019): ('get', 'mapper-output')
+12-Oct-22 19:43:45 - INFO - Alphabet group for reducer2: {'n', 'b', 'h', 'z', 'e', 'k', 't', 'q', 'w'}
+
+12-Oct-22 19:43:45 - INFO - Generating reducer2 input. Reading mapper input from ./kv-data-store/mapper-output/mapper1.json
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 1
+12-Oct-22 19:43:45 - INFO - Generating reducer2 input. Reading mapper input from ./kv-data-store/mapper-output/mapper2.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52020)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52020) has connected.
+12-Oct-22 19:43:45 - INFO - Packet length 60 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 2
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52020): ('get', 'mapper-output')
+12-Oct-22 19:43:45 - INFO - Alphabet group for reducer1: {'v', 'm', 'j', 'p', 's', 'a', 'd', 'g', 'y'}
+
+12-Oct-22 19:43:45 - INFO - Generating reducer1 input. Reading mapper input from ./kv-data-store/mapper-output/mapper1.json
+12-Oct-22 19:43:45 - INFO - Generating reducer2 input. Reading mapper input from ./kv-data-store/mapper-output/mapper3.json
+12-Oct-22 19:43:45 - INFO - Generating reducer1 input. Reading mapper input from ./kv-data-store/mapper-output/mapper2.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52021)
+12-Oct-22 19:43:45 - INFO - Generating reducer2 input. Reading mapper input from ./kv-data-store/mapper-output/mapper4.json
+12-Oct-22 19:43:45 - INFO - Generating reducer1 input. Reading mapper input from ./kv-data-store/mapper-output/mapper3.json
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52021) has connected.
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 3
+12-Oct-22 19:43:45 - INFO - Packet length 59 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52021): ('get', 'mapper-output')
+12-Oct-22 19:43:45 - INFO - Alphabet group for reducer3: {'x', 'o', 'f', 'i', 'l', 'c', 'r', 'u'}
+
+12-Oct-22 19:43:45 - INFO - Generating reducer1 input. Reading mapper input from ./kv-data-store/mapper-output/mapper4.json
+12-Oct-22 19:43:45 - INFO - Generating reducer3 input. Reading mapper input from ./kv-data-store/mapper-output/mapper1.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52022)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52022) has connected.
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 2
+12-Oct-22 19:43:45 - INFO - Packet length 1805 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52022): ('set', 'reducer-output')
+12-Oct-22 19:43:45 - INFO - Generating reducer2 output & writing to ./kv-data-store/reducer-output/reducer2.json
+12-Oct-22 19:43:45 - INFO - Generating reducer3 input. Reading mapper input from ./kv-data-store/mapper-output/mapper2.json
+12-Oct-22 19:43:45 - INFO - Generating reducer3 input. Reading mapper input from ./kv-data-store/mapper-output/mapper3.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52023)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52023) has connected.
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 3
+12-Oct-22 19:43:45 - INFO - Generating reducer3 input. Reading mapper input from ./kv-data-store/mapper-output/mapper4.json
+12-Oct-22 19:43:45 - INFO - Packet length 2998 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52023): ('set', 'reducer-output')
+12-Oct-22 19:43:45 - INFO - Generating reducer1 output & writing to ./kv-data-store/reducer-output/reducer1.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52025)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52025) has connected.
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 2
+12-Oct-22 19:43:45 - INFO - Packet length 2209 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52025): ('set', 'reducer-output')
+12-Oct-22 19:43:45 - INFO - Generating reducer3 output & writing to ./kv-data-store/reducer-output/reducer3.json
+12-Oct-22 19:43:45 - INFO - Connected to client ('127.0.0.1', 52028)
+12-Oct-22 19:43:45 - INFO - Client ('127.0.0.1', 52028) has connected.
+12-Oct-22 19:43:45 - INFO - Packet length 39 less than SIZE  4096. Breaking...
+12-Oct-22 19:43:45 - INFO - Command & category received from client ('127.0.0.1', 52028): ('combine', 'final-output')
+12-Oct-22 19:43:45 - INFO - Combining reducer output files into a single file. Reading below reducer files:
+['./kv-data-store/reducer-output/reducer1.json', './kv-data-store/reducer-output/reducer3.json', './kv-data-store/reducer-output/reducer2.json']
+
+12-Oct-22 19:43:45 - INFO - KV Number of clients connected: 1

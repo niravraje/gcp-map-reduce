@@ -1,0 +1,7 @@
+12-Oct-22 19:43:45 - INFO - reducer3 has started...
+12-Oct-22 19:43:45 - INFO - [reducer3] group string: cfilorux
+12-Oct-22 19:43:45 - INFO - [reducer3] No packet received. Breaking.
+12-Oct-22 19:43:45 - INFO - [reducer3] Inverted index reducing started...
+12-Oct-22 19:43:45 - INFO - [reducer3] Response for sending mapper output to KV store: b'\x80\x04\x95\x0c\x00\x00\x00\x00\x00\x00\x00\x8c\x08STORED\r\n\x94.'
+12-Oct-22 19:43:45 - INFO - [reducer3] Response for sending ACK to master: b''
+
