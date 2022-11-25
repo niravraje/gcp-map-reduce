@@ -1,6 +1,10 @@
-
 import os
 import time
+
+
+def list_instances(compute, project, zone):
+    result = compute.instances().list(project=project, zone=zone).execute()
+    return result['items'] if 'items' in result else None
 
 def create_instance(compute, project, zone, name):
     image_response = compute.images().getFromFamily(
@@ -51,11 +55,14 @@ def wait_for_operation(compute, project, zone, operation):
 
         time.sleep(1)
 
-# compute = discovery.build('compute', 'v1', credentials=credentials)
-# project = "nirav-raje-fall2022"
-# zone = "europe-west2-a"
-# name = "test-instance-from-py"
+def get_instance_obj(compute, project, zone, instance_name):
+    instances = list_instances(compute, project, zone)
+    for instance_obj in instances:
+        if instance_obj["name"] == instance_name:
+            return instance_obj
 
-# operation = create_instance(compute, project, zone, name)
-# wait_for_operation(compute, project, zone, operation)
-# print("done done done")
+def get_instance_internal_ip(instance_obj):
+    return instance_obj["networkInterfaces"][0]["networkIP"]
+
+def get_instance_external_ip(instance_obj):
+    return instance_obj["networkInterfaces"][0]["accessConfigs"][0]["natIP"]

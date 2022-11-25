@@ -1,7 +1,7 @@
 {
     "project_id": "nirav-raje-fall2022",
-    "zone": "europe-west2-a",
-    "kv_store_instance_name": "kv_store_server",
+    "zone": "europe-west1-b",
+    "kv_store_instance_name": "kv-store-server5",
     "master_instance_name": "master",
     "raw_input_data_path": "./raw-dataset",
     "mapper_count": 4,

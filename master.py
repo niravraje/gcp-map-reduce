@@ -13,7 +13,7 @@ from scripts import mapper
 from scripts import reducer
 from importlib import import_module
 
-from utils.instance_utils import create_instance
+from utils.instance_utils import *
 
 # GCP modules
 from googleapiclient import discovery
@@ -213,10 +213,21 @@ def master_init():
     zone = config["zone"]
     kv_store_instance_name = config["kv_store_instance_name"]
 
+    print(f"kv_store_instance_name: {kv_store_instance_name}")
     compute = discovery.build('compute', 'v1')
 
     # Create KV-Store instance
-    create_instance(compute, project, zone, kv_store_instance_name)
+    operation = create_instance(compute=compute, project=project, zone=zone, name=kv_store_instance_name)
+
+    # wait for kv store instance to be created
+    wait_for_operation(compute, project, zone, operation['name'])
+
+    kv_store_instance_obj = get_instance_obj(compute, project, zone, kv_store_instance_name)
+    kv_internal_ip = get_instance_internal_ip(kv_store_instance_obj)
+    kv_external_ip = get_instance_external_ip(kv_store_instance_obj)
+
+    print(f"kv_internal_ip: {kv_internal_ip}")
+    print(f"kv_external_ip: {kv_external_ip}")
 
     # # optional: ensuring mapper and reducer functions are correctly used based \
     # # on operation_name in case there are any typos in config.json function names
