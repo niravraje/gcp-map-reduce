@@ -316,7 +316,7 @@ def start_kv_server(config):
         level=logging.DEBUG
         )
 
-    kv_store_ip = config["kv_store_host"]
+    kv_store_ip = socket.gethostbyname(socket.gethostname())
     kv_store_port = config["kv_store_port"]
     kv_store_addr = (kv_store_ip, kv_store_port)
     
@@ -338,4 +338,8 @@ def start_kv_server(config):
         logging.info(f"KV Number of clients connected: {threading.active_count() - 1}")
 
 if __name__ == "__main__":
-    start_kv_server()
+    print("curr dir", os.getcwd())
+    with open("./gcp-map-reduce/config.json", "r") as fp:
+        config = json.load(fp)
+
+    start_kv_server(config)

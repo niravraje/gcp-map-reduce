@@ -2,8 +2,27 @@ import json
 import socket
 import pickle
 import logging
+from importlib import import_module
 
 SIZE = 4096
+
+def import_map_reduce_functions(config):
+    # import the map/reduce functions as specified in config.json
+
+    logging.info("Importing")
+
+    mapper_app_module = import_module(config["mapper_function"])
+    reducer_app_module = import_module(config["reducer_function"])
+    if config["mapper_function"] == "scripts.wordcount_map" or config["operation_name"] == "wordcount":
+        map_func = mapper_app_module.wordcount_map_init
+    else:
+        map_func = mapper_app_module.invertedindex_map_init
+    
+    if config["reducer_function"] == "scripts.wordcount_reduce" or config["operation_name"] == "wordcount":
+        reduce_func = reducer_app_module.wordcount_reduce_init
+    else:
+        reduce_func = reducer_app_module.invertedindex_reduce_init
+    return map_func, reduce_func
 
 def get_dataset_from_kvstore(mapper_id, kv_store_addr):
     logging.info(f"[{mapper_id}] Retrieving mapper input dataset from KV store...")
@@ -77,3 +96,10 @@ def mapper_init(mapper_id, map_func, config):
 
     # notify master that task is complete
     send_ack_to_master(mapper_id, master_addr)
+
+if __name__ == "__main__":
+    mapper_id = socket.gethostname()
+    with open("./gcp-map-reduce/config.json", "r") as fp:
+        config = json.load(fp)
+    map_func, _ = import_map_reduce_functions(config)
+    mapper_init(mapper_id, map_func, config)

@@ -14,6 +14,7 @@ from scripts import reducer
 from importlib import import_module
 
 from utils.instance_utils import *
+import subprocess
 
 # GCP modules
 from googleapiclient import discovery
@@ -174,6 +175,7 @@ def wait_for_reducers(master_server, reducer_process_list, config):
     # print(f"\n[MASTER] All reducers have joined.")
 
 def cleanup_kvstore(kv_store_addr):
+    print(f"**** cleanup *** {kv_store_addr}")
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(kv_store_addr)
     payload = ("cleanup", "all")
@@ -186,6 +188,54 @@ def combine_reducer_output(kv_store_addr):
     payload = ("combine", "final-output")
     client.sendall(pickle.dumps(payload))
     response = client.recv(SIZE)
+
+def launch_kv_store(compute, config):
+    project = config["project_id"]
+    zone = config["zone"]
+    kv_store_instance_name = config["kv_store_instance_name"]
+
+    operation = create_instance(compute=compute, project=project, zone=zone, name=kv_store_instance_name)
+    wait_for_operation(compute, project, zone, operation['name'])
+    kv_store_instance_obj = get_instance_obj(compute, project, zone, kv_store_instance_name)
+    kv_internal_ip = get_instance_internal_ip(kv_store_instance_obj)
+    kv_external_ip = get_instance_external_ip(kv_store_instance_obj)
+    print(f"KV Store Created.")
+    print(f"KV Store Internal IP: {kv_internal_ip}")
+    print(f"KV Store External IP: {kv_external_ip}")
+    
+    time.sleep(5)
+    subprocess.call(["/bin/bash", "./shell-scripts/kv_store_init.sh", config["kv_store_instance_name"], zone])
+    
+    config["kv_store_host"] = kv_internal_ip
+
+    return kv_store_instance_obj
+
+def launch_mappers(compute, config):
+    project = config["project_id"]
+    zone = config["zone"]
+    mapper_count = config["mapper_count"]
+
+    mapper_obj_table = {}
+    operations = []
+
+    for i in range(1, mapper_count+1):
+        mapper_instance_name = f"mapper{i}"
+        operation = create_instance(compute=compute, project=project, zone=zone, name=mapper_instance_name)
+        operations.append(operation)
+    
+    for oper in operations:
+        wait_for_operation(compute, project, zone, oper['name'])
+        mapper_instance_obj = get_instance_obj(compute, project, zone, mapper_instance_name)
+        mapper_obj_table[mapper_instance_name] = mapper_instance_obj
+
+    subprocess.call(["/bin/bash", "./shell-scripts/mapper_init.sh", str(mapper_count), zone])
+
+    return mapper_obj_table
+
+def update_config_file(config):
+    print("[MASTER] Updating config file...")
+    with open(CONFIG_FILE_PATH, "w") as fp:
+        json.dump(config, fp, indent=4)
 
 def master_init():
     
@@ -202,77 +252,64 @@ def master_init():
         level=logging.DEBUG
         )
 
-    host = socket.gethostbyname(socket.gethostname())
-    raw_input_data_path = config["raw_input_data_path"]
-    mapper_count = config["mapper_count"]
-    reducer_count = config["reducer_count"]
-    master_addr = (host, config["master_port"])
-    kv_store_addr = (config["kv_store_host"], config["kv_store_port"])
+    config["master_host"] = socket.gethostbyname(socket.gethostname())
+    master_addr = (config["master_host"], config["master_port"])
     operation_name = config["operation_name"]
-    project = config["project_id"]
-    zone = config["zone"]
-    kv_store_instance_name = config["kv_store_instance_name"]
 
-    print(f"kv_store_instance_name: {kv_store_instance_name}")
+    # optional: ensuring mapper and reducer functions are correctly used based \
+    # on operation_name in case there are any typos in config.json function names
+    # if config["ignore_function_names"] is false, the values from config.json are used
+    if config["ignore_function_names"] == "true":
+        if operation_name == "invertedindex":
+            config["mapper_function"] = "scripts.invertedindex_map"
+            config["reducer_function"] = "scripts.invertedindex_reduce"
+        else:
+            config["mapper_function"] = "scripts.wordcount_map"
+            config["reducer_function"] = "scripts.wordcount_reduce"
+
+    # Open master server socket & start listening for connections
+    print(f"[MASTER] Master process has started for {operation_name} operation...")
+    logging.info(f"Master process has started for {operation_name} operation...")
+    # Create master socket
+    master_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    master_server.bind(master_addr)
+    master_server.listen()
+    print(f"[MASTER] Server listening for connections at address {master_addr}...")
+    logging.info(f"Server listening for connections at address {master_addr}...")
+
+    subprocess.call(["/bin/bash", "./shell-scripts/master-init.sh"])
+
     compute = discovery.build('compute', 'v1')
+    
+    kv_store_instance_obj = launch_kv_store(compute, config)
 
-    # Create KV-Store instance
-    operation = create_instance(compute=compute, project=project, zone=zone, name=kv_store_instance_name)
+    # Update config file with new IPs of master, kv_store_server & any other changes
+    update_config_file(config)
+    
+    print("*** config at this point is\n", config)
 
-    # wait for kv store instance to be created
-    wait_for_operation(compute, project, zone, operation['name'])
+    # cleanup kv store
+    print(f"[MASTER] Cleaning up KV Store...")
+    logging.info(f"Cleaning up KV Store...")
+    kv_store_addr = (config["kv_store_host"], config["kv_store_port"])
+    cleanup_kvstore(kv_store_addr)
+    time.sleep(2)
+    
+    # generate dataset dictionary from raw-dataset
+    print(f"[MASTER] Partitioning raw dataset as per number of mappers...")
+    logging.info(f"Partitioning raw dataset as per number of mappers...")
+    dataset = generate_dataset(config["raw_input_data_path"])
 
-    kv_store_instance_obj = get_instance_obj(compute, project, zone, kv_store_instance_name)
-    kv_internal_ip = get_instance_internal_ip(kv_store_instance_obj)
-    kv_external_ip = get_instance_external_ip(kv_store_instance_obj)
+    # load dataset in "input" kv-store
+    print(f"[MASTER] Loading partitioned mapper-input files into KV Store...")
+    logging.info(f"Loading partitioned mapper-input files into KV Store...")
+    load_data_in_kvstore(kv_store_addr, dataset, config["mapper_count"])
+    time.sleep(1)
 
-    print(f"kv_internal_ip: {kv_internal_ip}")
-    print(f"kv_external_ip: {kv_external_ip}")
-
-    # # optional: ensuring mapper and reducer functions are correctly used based \
-    # # on operation_name in case there are any typos in config.json function names
-    # # if config["ignore_function_names"] is false, the values from config.json are used
-    # if config["ignore_function_names"] == "true":
-    #     if operation_name == "invertedindex":
-    #         config["mapper_function"] = "scripts.invertedindex_map"
-    #         config["reducer_function"] = "scripts.invertedindex_reduce"
-    #     else:
-    #         config["mapper_function"] = "scripts.wordcount_map"
-    #         config["reducer_function"] = "scripts.wordcount_reduce"
+    mapper_obj_table = launch_mappers(compute, config)
 
     # # get the application (wordcount/invertedindex) functions for map & reduce 
     # map_func, reduce_func = import_map_reduce_functions(config)
-
-    # print(f"[MASTER] Master process has started for {operation_name} operation...")
-    # logging.info(f"Master process has started for {operation_name} operation...")
-    # # Create master socket
-    # master_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # master_server.bind(master_addr)
-    # master_server.listen()
-    # print(f"[MASTER] Server listening for connections at address {master_addr}...")
-    # logging.info(f"Server listening for connections at address {master_addr}...")
-
-    # # Start KV store
-    # kv_store_process = mp.Process(target=start_kv_server, args=(config,))
-    # kv_store_process.start()
-    # time.sleep(3)
-
-    # # cleanup kv store
-    # print(f"[MASTER] Cleaning up KV Store...")
-    # logging.info(f"Cleaning up KV Store...")
-    # cleanup_kvstore(kv_store_addr)
-    # time.sleep(2)
-
-    # # generate dataset dictionary from raw-dataset
-    # print(f"[MASTER] Partitioning raw dataset as per number of mappers...")
-    # logging.info(f"Partitioning raw dataset as per number of mappers...")
-    # dataset = generate_dataset(raw_input_data_path)
-
-    # # load dataset in "input" kv-store
-    # print(f"[MASTER] Loading partitioned mapper-input files into KV Store...")
-    # logging.info(f"Loading partitioned mapper-input files into KV Store...")
-    # load_data_in_kvstore(kv_store_addr, dataset, mapper_count)
-    # time.sleep(1)
 
     # # Start mappers
     # print(f"[MASTER] Starting {mapper_count} Mappers...")

@@ -1,14 +1,17 @@
-25-Nov-22 07:03:41 - INFO - file_cache is only supported with oauth2client<4.0.0
-25-Nov-22 07:03:41 - DEBUG - Checking None for explicit credentials as part of auth process...
-25-Nov-22 07:03:41 - DEBUG - Checking Cloud SDK credentials as part of auth process...
-25-Nov-22 07:03:42 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
-25-Nov-22 07:03:42 - DEBUG - Making request: POST https://oauth2.googleapis.com/token
-25-Nov-22 07:03:42 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-25-Nov-22 07:03:44 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669359822786-5ee461f3d4eb3-67446a37-a9b629ea?alt=json
-25-Nov-22 07:03:45 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669359822786-5ee461f3d4eb3-67446a37-a9b629ea?alt=json
-25-Nov-22 07:03:46 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669359822786-5ee461f3d4eb3-67446a37-a9b629ea?alt=json
-25-Nov-22 07:03:47 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669359822786-5ee461f3d4eb3-67446a37-a9b629ea?alt=json
-25-Nov-22 07:03:48 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669359822786-5ee461f3d4eb3-67446a37-a9b629ea?alt=json
-25-Nov-22 07:03:50 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669359822786-5ee461f3d4eb3-67446a37-a9b629ea?alt=json
-25-Nov-22 07:03:51 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669359822786-5ee461f3d4eb3-67446a37-a9b629ea?alt=json
-25-Nov-22 07:03:51 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+28-Nov-22 20:26:37 - INFO - Master process has started for invertedindex operation...
+28-Nov-22 20:26:37 - INFO - Server listening for connections at address ('10.132.0.2', 7002)...
+28-Nov-22 20:26:44 - INFO - file_cache is only supported with oauth2client<4.0.0
+28-Nov-22 20:26:44 - DEBUG - Checking None for explicit credentials as part of auth process...
+28-Nov-22 20:26:44 - DEBUG - Checking Cloud SDK credentials as part of auth process...
+28-Nov-22 20:26:45 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
+28-Nov-22 20:26:45 - DEBUG - Making request: POST https://oauth2.googleapis.com/token
+28-Nov-22 20:26:46 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+28-Nov-22 20:26:47 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669667206139-5ee8db0b70eaf-38c92e51-c81de64a?alt=json
+28-Nov-22 20:26:49 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669667206139-5ee8db0b70eaf-38c92e51-c81de64a?alt=json
+28-Nov-22 20:26:50 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669667206139-5ee8db0b70eaf-38c92e51-c81de64a?alt=json
+28-Nov-22 20:26:51 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669667206139-5ee8db0b70eaf-38c92e51-c81de64a?alt=json
+28-Nov-22 20:26:52 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669667206139-5ee8db0b70eaf-38c92e51-c81de64a?alt=json
+28-Nov-22 20:26:53 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669667206139-5ee8db0b70eaf-38c92e51-c81de64a?alt=json
+28-Nov-22 20:26:54 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669667206139-5ee8db0b70eaf-38c92e51-c81de64a?alt=json
+28-Nov-22 20:26:54 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+28-Nov-22 20:27:14 - INFO - Cleaning up KV Store...
