@@ -114,17 +114,6 @@ def wait_for_mappers(master_server, mapper_process_list, config):
     logging.info(f"ACK received from all {mapper_count} mappers")
     print(f"\n[MASTER] --------- BARRIER (waiting for mappers to complete) ---------- \n")
     logging.info(f"BARRIER (waiting for mappers to complete)")
-    
-    # ensure KV store has created all mapper output files
-    # while len(glob.glob(config["mapper_output_path"])) < config["mapper_count"]:
-    #     pass
-
-    # print(f"\n[MASTER] Waiting for mappers to join...")
-    # # Hard barrier: Master will block till all mapper processes have joined
-    # for mapper_process in mapper_process_list:
-    #     mapper_process.join()
-    # print(f"\n[MASTER] All mappers have joined.")
-
 
 
 def start_reducers(config, reduce_func):
@@ -164,16 +153,6 @@ def wait_for_reducers(master_server, reducer_process_list, config):
     print(f"\n[MASTER] ACK received from all {reducer_count} reducers")
     logging.info(f"ACK received from all {reducer_count} reducers")
 
-    # ensure KV store has created all reducer output files
-    # while len(glob.glob(config["reducer_output_path"])) < config["reducer_count"]:
-    #     pass
-
-    # Hard barrier: To run final combiner function, master will block till all reducers are done
-    # print(f"\n[MASTER] Waiting for reducers to join...")
-    # for reducer_process in reducer_process_list:
-    #     reducer_process.join()
-    # print(f"\n[MASTER] All reducers have joined.")
-
 def cleanup_kvstore(kv_store_addr):
     print(f"**** cleanup *** {kv_store_addr}")
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -186,7 +165,7 @@ def combine_reducer_output(kv_store_addr):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(kv_store_addr)
     payload = ("combine", "final-output")
-    client.sendall(pickle.dumps(payload))
+    client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
     response = client.recv(SIZE)
 
 def launch_kv_store(compute, config):
@@ -261,11 +240,11 @@ def master_init():
     # if config["ignore_function_names"] is false, the values from config.json are used
     if config["ignore_function_names"] == "true":
         if operation_name == "invertedindex":
-            config["mapper_function"] = "scripts.invertedindex_map"
-            config["reducer_function"] = "scripts.invertedindex_reduce"
+            config["mapper_function"] = "invertedindex_map"
+            config["reducer_function"] = "invertedindex_reduce"
         else:
-            config["mapper_function"] = "scripts.wordcount_map"
-            config["reducer_function"] = "scripts.wordcount_reduce"
+            config["mapper_function"] = "wordcount_map"
+            config["reducer_function"] = "wordcount_reduce"
 
     # Open master server socket & start listening for connections
     print(f"[MASTER] Master process has started for {operation_name} operation...")
@@ -281,7 +260,7 @@ def master_init():
 
     compute = discovery.build('compute', 'v1')
     
-    kv_store_instance_obj = launch_kv_store(compute, config)
+    # kv_store_instance_obj = launch_kv_store(compute, config)
 
     # Update config file with new IPs of master, kv_store_server & any other changes
     update_config_file(config)
@@ -307,6 +286,9 @@ def master_init():
     time.sleep(1)
 
     mapper_obj_table = launch_mappers(compute, config)
+
+    # Barrier: Wait for all mappers to complete
+    # wait_for_mappers(master_server, mapper_process_list, config)
 
     # # get the application (wordcount/invertedindex) functions for map & reduce 
     # map_func, reduce_func = import_map_reduce_functions(config)

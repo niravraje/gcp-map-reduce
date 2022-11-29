@@ -13,12 +13,12 @@ def import_map_reduce_functions(config):
 
     mapper_app_module = import_module(config["mapper_function"])
     reducer_app_module = import_module(config["reducer_function"])
-    if config["mapper_function"] == "scripts.wordcount_map" or config["operation_name"] == "wordcount":
+    if config["mapper_function"] == "wordcount_map" or config["operation_name"] == "wordcount":
         map_func = mapper_app_module.wordcount_map_init
     else:
         map_func = mapper_app_module.invertedindex_map_init
     
-    if config["reducer_function"] == "scripts.wordcount_reduce" or config["operation_name"] == "wordcount":
+    if config["reducer_function"] == "wordcount_reduce" or config["operation_name"] == "wordcount":
         reduce_func = reducer_app_module.wordcount_reduce_init
     else:
         reduce_func = reducer_app_module.invertedindex_reduce_init
@@ -31,21 +31,17 @@ def get_dataset_from_kvstore(mapper_id, kv_store_addr):
     client.connect(kv_store_addr)
 
     payload = ("get", "input", mapper_id)
-    client.sendall(pickle.dumps(payload))
+    client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
 
-    serialized_msg_list = []
+    serialized_msg = b""
     while True:
         packet = client.recv(SIZE)
-        if not packet:
-            print(f"[MAPPER - {mapper_id}] No packet received. Breaking.")
+        serialized_msg += packet
+        if b"ENDOFDATA" in packet:
+            logging.info(f"ENDOFDATA received. Breaking...")
             break
-        serialized_msg_list.append(packet)
 
-        # if len(packet) < SIZE:
-        #     print(f"[MAPPER - {mapper_id}] Packet length ({len(packet)}) less than SIZE ({SIZE}). Breaking.")
-        #     break
-    
-    serialized_msg = b"".join(serialized_msg_list)
+    serialized_msg = serialized_msg[:-9] # exclude ENDOFDATA
     dataset = pickle.loads(serialized_msg)
     return dataset
 
@@ -53,10 +49,9 @@ def send_mapper_output_to_kvstore(mapper_id, mapper_output, kv_store_addr):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(kv_store_addr)
     payload = ("set", "mapper-output", mapper_id, mapper_output)
-    client.sendall(pickle.dumps(payload))
+    client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
     response = client.recv(SIZE)
     # response = pickle.loads(response)
-    print(f"[MAPPER - {mapper_id}] Response for sending mapper output to KV store: {response}")
     logging.info(f"[{mapper_id}] Response for sending mapper output to KV store: {response}")
 
 def send_ack_to_master(mapper_id, master_addr):

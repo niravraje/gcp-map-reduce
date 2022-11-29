@@ -113,23 +113,14 @@ def client_handler(conn, client_addr, config):
     response = "DONE"
 
     serialized_msg = b""
-
     while True:
         packet = conn.recv(SIZE)
-        # if not packet:
-        #     logging.info("No packet received. Breaking...")
-        #     break
         logging.info(f"[KV] Packet received of size {len(packet)}: {packet}")
         serialized_msg += packet
 
         if b"ENDOFDATA" in packet:
             logging.info(f"ENDOFDATA received. Breaking...")
             break
-
-        # if len(packet) < SIZE:
-        #     print(f"[KV] Packet length {len(packet)} less than SIZE  {SIZE}. Breaking...")
-        #     logging.info(f"Packet length {len(packet)} less than SIZE  {SIZE}. Breaking...")
-        #     break
 
     serialized_msg = serialized_msg[:-9] # exclude ENDOFDATA
     payload = pickle.loads(serialized_msg)
@@ -273,8 +264,6 @@ def client_handler(conn, client_addr, config):
                 print(f"[KV] Error in combining reducer output files. Error while writing to file {file_path}. Response: {response}")
                 logging.info(f"Error in combining reducer output files. Error while writing to file {file_path}. Response: {response}")
 
-
-
     elif payload[0] == "cleanup":
         print("\n[KV] Cleaning up KV Store's data from previous runs\n")
         logging.info("Cleaning up KV Store's data from previous runs\n")
@@ -301,12 +290,10 @@ def client_handler(conn, client_addr, config):
 
         print("\n[KV] All intermediate files from previous sessions cleaned\n")
         logging.info("All intermediate files from previous sessions cleaned\n")
-        
-    
     else:
         response = "[KV] CLIENT_ERROR Invalid Command Received\r\n"
 
-    conn.send(pickle.dumps(response))
+    conn.send(pickle.dumps(response) + b"ENDOFDATA")
     
     print(f"[KV] Connection to {client_addr} closed.")
     conn.close()
