@@ -74,7 +74,7 @@ def load_data_in_kvstore(kv_store_addr, dataset, mapper_count):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(kv_store_addr)
     payload = ("set", "input", dataset, mapper_count)
-    client.sendall(pickle.dumps(payload))
+    client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
 
 def start_mappers(config, map_func):
 
@@ -179,7 +179,7 @@ def cleanup_kvstore(kv_store_addr):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(kv_store_addr)
     payload = ("cleanup", "all")
-    client.sendall(pickle.dumps(payload))
+    client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
     response = client.recv(SIZE)
 
 def combine_reducer_output(kv_store_addr):

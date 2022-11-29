@@ -116,16 +116,22 @@ def client_handler(conn, client_addr, config):
 
     while True:
         packet = conn.recv(SIZE)
-        if not packet:
-            print("[KV] No packet received. Breaking...")
-            logging.info("No packet received. Breaking...")
-            break
+        # if not packet:
+        #     logging.info("No packet received. Breaking...")
+        #     break
+        logging.info(f"[KV] Packet received of size {len(packet)}: {packet}")
         serialized_msg += packet
-        if len(packet) < SIZE:
-            print(f"[KV] Packet length {len(packet)} less than SIZE  {SIZE}. Breaking...")
-            logging.info(f"Packet length {len(packet)} less than SIZE  {SIZE}. Breaking...")
+
+        if b"ENDOFDATA" in packet:
+            logging.info(f"ENDOFDATA received. Breaking...")
             break
 
+        # if len(packet) < SIZE:
+        #     print(f"[KV] Packet length {len(packet)} less than SIZE  {SIZE}. Breaking...")
+        #     logging.info(f"Packet length {len(packet)} less than SIZE  {SIZE}. Breaking...")
+        #     break
+
+    serialized_msg = serialized_msg[:-9] # exclude ENDOFDATA
     payload = pickle.loads(serialized_msg)
 
     print(f"[KV] Command & category received from client {client_addr}:\n", payload[:2])
