@@ -76,36 +76,24 @@ def load_data_in_kvstore(kv_store_addr, dataset, mapper_count):
     payload = ("set", "input", dataset, mapper_count)
     client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
 
-def start_mappers(config, map_func):
-
-    # delete any previous intermediate output files
-    folder_files = glob.glob("./kv-data-store/mapper-output/*")
-    for f in folder_files:
-        os.remove(f)
-
-    mapper_ids = ["mapper" + str(i+1) for i in range(config["mapper_count"])]
-    print("[MASTER] Mapper IDs: ", mapper_ids)
-    logging.info(f"Mapper IDs: {mapper_ids}")
-
-    mapper_process_list = []
-
-    for mapper_id in mapper_ids:
-        mapper_process = mp.Process(target=mapper.mapper_init, args=(mapper_id, map_func, config,))
-        mapper_process.start()
-        mapper_process_list.append(mapper_process)
-    
-    return mapper_process_list
-
-def wait_for_mappers(master_server, mapper_process_list, config):
+def wait_for_mappers(master_server, config):
     count = 0
-    mapper_count = len(mapper_process_list)
+    mapper_count = config["mapper_count"]
 
     # Wait for explicit ACK from all mappers 
     while count < mapper_count:
         conn, client_addr = master_server.accept()
         print(f"[MASTER] Connection request accepted from mapper {client_addr}")
-        packet = conn.recv(SIZE)
-        payload = pickle.loads(packet)
+
+        serialized_msg = b""
+        while True:
+            packet = conn.recv(SIZE)
+            serialized_msg += packet
+            if b"ENDOFDATA" in packet:
+                break
+        serialized_msg = serialized_msg[:-9] # exclude ENDOFDATA
+        payload = pickle.loads(serialized_msg)
+        
         if payload[0][:6] == "mapper" and payload[1] == "DONE":
             print(f"[MASTER] {payload[0]} task completed")
             logging.info(f"{payload[0]} task completed")
@@ -115,36 +103,24 @@ def wait_for_mappers(master_server, mapper_process_list, config):
     print(f"\n[MASTER] --------- BARRIER (waiting for mappers to complete) ---------- \n")
     logging.info(f"BARRIER (waiting for mappers to complete)")
 
-
-def start_reducers(config, reduce_func):
-    category_path = config["reducer_output_path"]
-    # delete any previous reducer output files
-    folder_files = glob.glob(os.path.join(category_path, "*"))
-    for f in folder_files:
-        os.remove(f)
-
-    reducer_ids = ["reducer" + str(i+1) for i in range(config["reducer_count"])]
-    print(f"[MASTER] Reducer IDs: {reducer_ids}")
-    logging.info(f"Reducer IDs: {reducer_ids}")
-
-    reducer_process_list = []
-    for reducer_id in reducer_ids:
-        reducer_process = mp.Process(target=reducer.reducer_init, args=(reducer_id, reduce_func, config,))
-        reducer_process.start()
-        reducer_process_list.append(reducer_process)
-    
-    return reducer_process_list
-
-def wait_for_reducers(master_server, reducer_process_list, config):
+def wait_for_reducers(master_server, config):
     count = 0
-    reducer_count = len(reducer_process_list)
+    reducer_count = config["reducer_count"]
 
     # Wait for explicit ACK from all reducers
     while count < reducer_count:
         conn, client_addr = master_server.accept()
         print(f"[MASTER] Connection request accepted from reducer {client_addr}")
-        packet = conn.recv(SIZE)
-        payload = pickle.loads(packet)
+
+        serialized_msg = b""
+        while True:
+            packet = conn.recv(SIZE)
+            serialized_msg += packet
+            if b"ENDOFDATA" in packet:
+                break
+        serialized_msg = serialized_msg[:-9] # exclude ENDOFDATA
+        payload = pickle.loads(serialized_msg)
+
         if payload[0][:7] == "reducer" and payload[1] == "DONE":
             print(f"[MASTER] {payload[0]} task completed")
             logging.info(f"{payload[0]} task completed")
@@ -159,14 +135,12 @@ def cleanup_kvstore(kv_store_addr):
     client.connect(kv_store_addr)
     payload = ("cleanup", "all")
     client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
-    response = client.recv(SIZE)
 
 def combine_reducer_output(kv_store_addr):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(kv_store_addr)
     payload = ("combine", "final-output")
     client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
-    response = client.recv(SIZE)
 
 def launch_kv_store(compute, config):
     project = config["project_id"]
@@ -193,7 +167,6 @@ def launch_mappers(compute, config):
     project = config["project_id"]
     zone = config["zone"]
     mapper_count = config["mapper_count"]
-
     mapper_obj_table = {}
     operations = []
 
@@ -207,9 +180,29 @@ def launch_mappers(compute, config):
         mapper_instance_obj = get_instance_obj(compute, project, zone, mapper_instance_name)
         mapper_obj_table[mapper_instance_name] = mapper_instance_obj
 
+    time.sleep(max(5 * mapper_count, 10))
     subprocess.call(["/bin/bash", "./shell-scripts/mapper_init.sh", str(mapper_count), zone])
-
     return mapper_obj_table
+
+def launch_reducers(compute, config):
+    project = config["project_id"]
+    zone = config["zone"]
+    reducer_count = config["reducer_count"]
+    reducer_obj_table = {}
+    operations = []
+
+    for i in range(1, reducer_count+1):
+        reducer_instance_name = f"reducer{i}"
+        operation = create_instance(compute=compute, project=project, zone=zone, name=reducer_instance_name)
+        operations.append(operation)
+    
+    for oper in operations:
+        wait_for_operation(compute, project, zone, oper['name'])
+        reducer_instance_obj = get_instance_obj(compute, project, zone, reducer_instance_name)
+        reducer_obj_table[reducer_instance_name] = reducer_instance_obj
+
+    subprocess.call(["/bin/bash", "./shell-scripts/reducer_init.sh", str(reducer_count), zone])
+    return reducer_obj_table
 
 def update_config_file(config):
     print("[MASTER] Updating config file...")
@@ -260,7 +253,7 @@ def master_init():
 
     compute = discovery.build('compute', 'v1')
     
-    # kv_store_instance_obj = launch_kv_store(compute, config)
+    kv_store_instance_obj = launch_kv_store(compute, config)
 
     # Update config file with new IPs of master, kv_store_server & any other changes
     update_config_file(config)
@@ -288,44 +281,23 @@ def master_init():
     mapper_obj_table = launch_mappers(compute, config)
 
     # Barrier: Wait for all mappers to complete
-    # wait_for_mappers(master_server, mapper_process_list, config)
+    wait_for_mappers(master_server, config)
 
-    # # get the application (wordcount/invertedindex) functions for map & reduce 
-    # map_func, reduce_func = import_map_reduce_functions(config)
+    mapper_count = config["mapper_count"]
+    print(f"\n[MASTER] All {mapper_count} mapper tasks are complete...\n")
+    logging.info(f"All {mapper_count} mapper tasks are complete...")
 
-    # # Start mappers
-    # print(f"[MASTER] Starting {mapper_count} Mappers...")
-    # logging.info(f"Starting {mapper_count} Mappers...")
-    # mapper_process_list = start_mappers(config, map_func)
+    reducer_obj_table = launch_reducers(compute, config)
 
-    # # Barrier: Wait for all mappers to complete
-    # wait_for_mappers(master_server, mapper_process_list, config)
+    # Wait for all reducers to complete: only applicable if single output file is desired
+    wait_for_reducers(master_server, config)
 
-    # print(f"\n[MASTER] All {mapper_count} mapper tasks are complete...\n")
-    # logging.info(f"All {mapper_count} mapper tasks are complete...")
+    print(f"[MASTER] Generating final output file & writing to {config['final_output_path']}...")
+    logging.info(f"Generating final output file & writing to {config['final_output_path']}...")
+    # Combine reducers' output into a single file
+    combine_reducer_output(kv_store_addr)
 
-    # # Start reducers
-    # print(f"[MASTER] Starting {reducer_count} Reducers...")
-    # logging.info(f"Starting {reducer_count} Reducers...")
-    # reducer_process_list = start_reducers(config, reduce_func)
-
-    # # Wait for all reducers to complete: only applicable if single output file is desired
-    # wait_for_reducers(master_server, reducer_process_list, config)
-
-    # print(f"[MASTER] Generating final output file & writing to {config['final_output_path']}...")
-    # logging.info(f"Generating final output file & writing to {config['final_output_path']}...")
-    # # Combine reducers' output into a single file
-    # combine_reducer_output(kv_store_addr)
-
-
-    # # Terminate all mappers/reducers and the KV store
-    # for process in mapper_process_list:
-    #     if process.is_alive():
-    #         process.terminate()
-    # for process in reducer_process_list:
-    #     if process.is_alive():
-    #         process.terminate()
-    # kv_store_process.terminate()
+    # cleanup / delete all VMs
 
 
 if __name__ == "__main__":

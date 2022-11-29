@@ -58,11 +58,7 @@ def send_ack_to_master(mapper_id, master_addr):
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(master_addr)
     payload = (mapper_id, "DONE")
-    client.sendall(pickle.dumps(payload))
-    response = client.recv(SIZE)
-    # response = pickle.loads(response)
-    print(f"[MAPPER - {mapper_id}] Response for sending ACK to master: {response}")
-    logging.info(f"[{mapper_id}] Response for sending ACK to master: {response}")
+    client.sendall(pickle.dumps(payload) + b"ENDOFDATA")
 
 def mapper_init(mapper_id, map_func, config):
     logging.basicConfig(

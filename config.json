@@ -4,7 +4,7 @@
     "kv_store_instance_name": "kv-store-server6",
     "master_instance_name": "master",
     "raw_input_data_path": "./raw-dataset",
-    "mapper_count": 1,
+    "mapper_count": 2,
     "reducer_count": 2,
     "operation_name": "invertedindex",
     "ignore_function_names": "true",
