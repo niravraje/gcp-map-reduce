@@ -297,8 +297,8 @@ def master_init():
     # Combine reducers' output into a single file
     combine_reducer_output(kv_store_addr)
 
-    # cleanup / delete all VMs
-
+    # cleanup (delete all mapper & reducer VMs)
+    subprocess.call(["/bin/bash", "./shell-scripts/cleanup.sh", str(config["mapper_count"]), str(config["reducer_count"]), config["zone"]])
 
 if __name__ == "__main__":
     master_init()

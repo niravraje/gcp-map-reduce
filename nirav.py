@@ -1,6 +1,5 @@
-import socket
-import subprocess
+import json
 
-print("host", socket.gethostbyname(socket.gethostname()))
-
-code = subprocess.call(["/bin/bash", "./shell-scripts/nirav.sh", "yoyo", "123"])
+with open("datasetgenerated.json") as fp:
+    data = json.load(fp)
+    print(data.keys())

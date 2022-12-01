@@ -4,7 +4,6 @@ def invertedindex_reduce_init(reducer_input, reducer_id):
     print(f"[REDUCER - {reducer_id}] Inverted index reducing started...")
     logging.info(f"[{reducer_id}] Inverted index reducing started...")
 
-
     reducer_output = {}
     for item in reducer_input:
         token, doc_name = item

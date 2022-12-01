@@ -49,17 +49,17 @@ def create_partitioned_dataset(dataset, mapper_count):
             start = 0
             i += 1
 
-        if mapper_lines_count == mapper_chunk_size:
+        if mapper_lines_count >= mapper_chunk_size:
             mapper_num += 1
             mapper_id = "mapper" + str(mapper_num)
             mapper_lines_count = 0
     
-    print("\n\n\n-- [INFO] Partitioned Dataset Summary --")
+    logging.info("\n\n\n-- [INFO] Partitioned Dataset Summary --")
     for mapper_id in result_dataset:
-        print(f"\n[{mapper_id}]")
-        print("Total lines in mapper: ", count_lines_in_dataset(result_dataset[mapper_id]))
-        print("Docs in mapper: ", result_dataset[mapper_id].keys())
-    print("\n-- End of Partitioned Dataset Summary --\n\n\n")
+        logging.info(f"\n[{mapper_id}]")
+        logging.info(f"Total lines in mapper: {count_lines_in_dataset(result_dataset[mapper_id])}")
+        logging.info(f"Docs in mapper: {result_dataset[mapper_id].keys()}")
+    logging.info("\n-- End of Partitioned Dataset Summary --\n\n\n")
         
     return result_dataset
 
@@ -115,7 +115,6 @@ def client_handler(conn, client_addr, config):
     serialized_msg = b""
     while True:
         packet = conn.recv(SIZE)
-        logging.info(f"[KV] Packet received of size {len(packet)}: {packet}")
         serialized_msg += packet
 
         if b"ENDOFDATA" in packet:
@@ -134,7 +133,7 @@ def client_handler(conn, client_addr, config):
         if category == "input":
             dataset = payload[2]
             mapper_count = payload[3]
-            
+            logging.info(f"set input's mapper count: {mapper_count}")
             partitioned_dataset = create_partitioned_dataset(dataset, mapper_count)
 
             category_path = config["input_data_path"]
@@ -230,6 +229,19 @@ def client_handler(conn, client_addr, config):
                 response = "INVALID_OPERATION_NAME"
                 print(f"[KV] Error in retrieving mapper output from {file_path}. Response: {response}")
                 logging.error(f"Error in retrieving mapper output from {file_path}. Response: {response}")
+        
+        elif category == "final-output":
+            operation = payload[2]
+            category_path = config["final_output_path"]
+            filename = "final-output-" + str(operation) + ".json"
+            file_path = os.path.join(category_path, filename)
+            logging.info(f"Retrieving {filename} from {category_path}")
+
+            try:
+                with open(file_path, "r") as fp:
+                    response = json.load(fp)
+            except:
+                response = "File not found."
             
     elif payload[0] == "combine":
         category = payload[1]
