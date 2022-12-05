@@ -12,7 +12,7 @@
     "reducer_function": "invertedindex_reduce",
     "master_host": "10.132.0.2",
     "master_port": 7002,
-    "kv_store_host": "10.132.0.3",
+    "kv_store_host": "10.132.0.8",
     "kv_store_port": 7001,
     "input_data_path": "./gcp-map-reduce/kv-data-store/input-docs",
     "mapper_output_path": "./gcp-map-reduce/kv-data-store/mapper-output",

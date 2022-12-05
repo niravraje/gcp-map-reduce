@@ -1,56 +1,58 @@
-01-Dec-22 00:14:40 - INFO - Master process has started for invertedindex operation...
-01-Dec-22 00:14:40 - INFO - Server listening for connections at address ('10.132.0.2', 7002)...
-01-Dec-22 00:14:47 - INFO - file_cache is only supported with oauth2client<4.0.0
-01-Dec-22 00:14:47 - DEBUG - Checking None for explicit credentials as part of auth process...
-01-Dec-22 00:14:47 - DEBUG - Checking Cloud SDK credentials as part of auth process...
-01-Dec-22 00:14:48 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
-01-Dec-22 00:14:48 - DEBUG - Making request: POST https://oauth2.googleapis.com/token
-01-Dec-22 00:14:49 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:14:50 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853689139-5eeb91bf7d270-0794b13c-ece3f96a?alt=json
-01-Dec-22 00:14:52 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853689139-5eeb91bf7d270-0794b13c-ece3f96a?alt=json
-01-Dec-22 00:14:53 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853689139-5eeb91bf7d270-0794b13c-ece3f96a?alt=json
-01-Dec-22 00:14:54 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853689139-5eeb91bf7d270-0794b13c-ece3f96a?alt=json
-01-Dec-22 00:14:55 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853689139-5eeb91bf7d270-0794b13c-ece3f96a?alt=json
-01-Dec-22 00:14:56 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853689139-5eeb91bf7d270-0794b13c-ece3f96a?alt=json
-01-Dec-22 00:14:56 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:16:46 - INFO - Cleaning up KV Store...
-01-Dec-22 00:16:48 - INFO - Partitioning raw dataset as per number of mappers...
-01-Dec-22 00:16:49 - INFO - Loading partitioned mapper-input files into KV Store...
-01-Dec-22 00:16:50 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
-01-Dec-22 00:16:50 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:16:51 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
-01-Dec-22 00:16:52 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:16:53 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
-01-Dec-22 00:16:53 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:16:55 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853810382-5eeb92331d867-2c690f7e-d8094026?alt=json
-01-Dec-22 00:16:56 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853810382-5eeb92331d867-2c690f7e-d8094026?alt=json
-01-Dec-22 00:16:57 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853810382-5eeb92331d867-2c690f7e-d8094026?alt=json
-01-Dec-22 00:16:57 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:16:57 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853812021-5eeb9234ad990-66e4b10d-453e8c94?alt=json
-01-Dec-22 00:16:59 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853812021-5eeb9234ad990-66e4b10d-453e8c94?alt=json
-01-Dec-22 00:16:59 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:16:59 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853813955-5eeb923685a1d-3f1e5dd1-f928a6c3?alt=json
-01-Dec-22 00:17:00 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669853813955-5eeb923685a1d-3f1e5dd1-f928a6c3?alt=json
-01-Dec-22 00:17:00 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:22:43 - INFO - mapper1 task completed
-01-Dec-22 00:22:43 - INFO - mapper2 task completed
-01-Dec-22 00:22:45 - INFO - mapper3 task completed
-01-Dec-22 00:22:45 - INFO - ACK received from all 3 mappers
-01-Dec-22 00:22:45 - INFO - BARRIER (waiting for mappers to complete)
-01-Dec-22 00:22:45 - INFO - All 3 mapper tasks are complete...
-01-Dec-22 00:22:45 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
-01-Dec-22 00:22:45 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:22:46 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
-01-Dec-22 00:22:47 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:22:48 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669854165629-5eeb9385e7a0f-a502c7ef-1d2b039e?alt=json
-01-Dec-22 00:22:49 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669854165629-5eeb9385e7a0f-a502c7ef-1d2b039e?alt=json
-01-Dec-22 00:22:50 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669854165629-5eeb9385e7a0f-a502c7ef-1d2b039e?alt=json
-01-Dec-22 00:22:52 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669854165629-5eeb9385e7a0f-a502c7ef-1d2b039e?alt=json
-01-Dec-22 00:22:52 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:22:52 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669854167178-5eeb938761b86-cb5720a4-be1acee8?alt=json
-01-Dec-22 00:22:53 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1669854167178-5eeb938761b86-cb5720a4-be1acee8?alt=json
-01-Dec-22 00:22:53 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
-01-Dec-22 00:26:43 - INFO - reducer1 task completed
-01-Dec-22 00:26:43 - INFO - reducer2 task completed
-01-Dec-22 00:26:43 - INFO - ACK received from all 2 reducers
-01-Dec-22 00:26:43 - INFO - Generating final output file & writing to ./gcp-map-reduce/kv-data-store/final-output...
+05-Dec-22 21:45:24 - INFO - Master process has started for invertedindex operation...
+05-Dec-22 21:45:24 - INFO - Server listening for connections at address ('10.132.0.2', 7002)...
+05-Dec-22 21:45:31 - INFO - file_cache is only supported with oauth2client<4.0.0
+05-Dec-22 21:45:31 - DEBUG - Checking None for explicit credentials as part of auth process...
+05-Dec-22 21:45:31 - DEBUG - Checking Cloud SDK credentials as part of auth process...
+05-Dec-22 21:45:32 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
+05-Dec-22 21:45:32 - DEBUG - Making request: POST https://oauth2.googleapis.com/token
+05-Dec-22 21:45:33 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:45:34 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276733145-5ef1b9b5b1318-82c8992a-53809324?alt=json
+05-Dec-22 21:45:35 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276733145-5ef1b9b5b1318-82c8992a-53809324?alt=json
+05-Dec-22 21:45:36 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276733145-5ef1b9b5b1318-82c8992a-53809324?alt=json
+05-Dec-22 21:45:37 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276733145-5ef1b9b5b1318-82c8992a-53809324?alt=json
+05-Dec-22 21:45:38 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276733145-5ef1b9b5b1318-82c8992a-53809324?alt=json
+05-Dec-22 21:45:38 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:47:33 - INFO - Cleaning up KV Store...
+05-Dec-22 21:47:35 - INFO - Partitioning raw dataset as per number of mappers...
+05-Dec-22 21:47:35 - INFO - Loading partitioned mapper-input files into KV Store...
+05-Dec-22 21:47:36 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
+05-Dec-22 21:47:36 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:47:38 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
+05-Dec-22 21:47:38 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:47:40 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
+05-Dec-22 21:47:40 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:47:42 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276856582-5ef1ba2b69046-686ae917-df535143?alt=json
+05-Dec-22 21:47:43 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276856582-5ef1ba2b69046-686ae917-df535143?alt=json
+05-Dec-22 21:47:44 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276856582-5ef1ba2b69046-686ae917-df535143?alt=json
+05-Dec-22 21:47:44 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:47:44 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276858569-5ef1ba2d4e323-ee34f66f-fef46db7?alt=json
+05-Dec-22 21:47:45 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276858569-5ef1ba2d4e323-ee34f66f-fef46db7?alt=json
+05-Dec-22 21:47:46 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276858569-5ef1ba2d4e323-ee34f66f-fef46db7?alt=json
+05-Dec-22 21:47:46 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:47:46 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670276860555-5ef1ba2f3314b-d9a41259-1e27f7db?alt=json
+05-Dec-22 21:47:46 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:53:28 - INFO - mapper1 task completed
+05-Dec-22 21:53:28 - INFO - mapper2 task completed
+05-Dec-22 21:53:30 - INFO - mapper3 task completed
+05-Dec-22 21:53:30 - INFO - ACK received from all 3 mappers
+05-Dec-22 21:53:30 - INFO - BARRIER (waiting for mappers to complete)
+05-Dec-22 21:53:30 - INFO - All 3 mapper tasks are complete...
+05-Dec-22 21:53:30 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
+05-Dec-22 21:53:30 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:53:32 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-11?alt=json
+05-Dec-22 21:53:32 - DEBUG - URL being requested: POST https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:53:34 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670277210903-5ef1bb7d5123f-fb67eda4-588def65?alt=json
+05-Dec-22 21:53:35 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670277210903-5ef1bb7d5123f-fb67eda4-588def65?alt=json
+05-Dec-22 21:53:36 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670277210903-5ef1bb7d5123f-fb67eda4-588def65?alt=json
+05-Dec-22 21:53:37 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670277210903-5ef1bb7d5123f-fb67eda4-588def65?alt=json
+05-Dec-22 21:53:37 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:53:37 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670277212475-5ef1bb7ed0eaf-446fbfbe-27895322?alt=json
+05-Dec-22 21:53:38 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670277212475-5ef1bb7ed0eaf-446fbfbe-27895322?alt=json
+05-Dec-22 21:53:39 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/operations/operation-1670277212475-5ef1bb7ed0eaf-446fbfbe-27895322?alt=json
+05-Dec-22 21:53:39 - DEBUG - URL being requested: GET https://compute.googleapis.com/compute/v1/projects/nirav-raje-fall2022/zones/europe-west1-b/instances?alt=json
+05-Dec-22 21:57:33 - INFO - reducer1 task completed
+05-Dec-22 21:57:33 - INFO - reducer2 task completed
+05-Dec-22 21:57:33 - INFO - ACK received from all 2 reducers
+05-Dec-22 21:57:33 - INFO - Generating final output file & writing to ./gcp-map-reduce/kv-data-store/final-output...
+05-Dec-22 21:57:33 - INFO - 12.18.167.208 - - [05/Dec/2022 21:57:33] "POST /launch_map_reduce HTTP/1.1" 200 -
+05-Dec-22 21:59:52 - INFO - 12.18.167.208 - - [05/Dec/2022 21:59:52] "GET /final_output HTTP/1.1" 200 -

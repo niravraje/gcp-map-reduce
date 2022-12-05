@@ -17,8 +17,8 @@ def home():
 
 @app.route('/launch_map_reduce', methods=["POST"])
 def launch_map_reduce():
-    subprocess.call(["python3", "master.py", "&"])
-    return jsonify({"status": "running"})
+    master_init()
+    return jsonify({"status": "complete"})
 
 @app.route('/final_output', methods=["GET"])
 def fetch_final_output_from_kvstore():
