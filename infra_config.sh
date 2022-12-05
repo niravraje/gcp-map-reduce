@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# not in use
+
 PROJECT_ID="nirav-raje-fall2022"
 INSTANCE_ZONE="europe-west1-b"
 

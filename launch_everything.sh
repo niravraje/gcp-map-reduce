@@ -2,6 +2,8 @@
 
 # set -x
 
+# not in use
+
 source ./infra_config.sh
 
 for ((i=1; i<=${MAPPER_COUNT}; i++))
